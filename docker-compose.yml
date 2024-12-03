@@ -1,0 +1,38 @@
+
+
+services:
+  web:
+    build: .
+    ports:
+      -"8000:8000"
+    command: python manage.py runserver
+    volumes:
+      - .:/code
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    networks:
+      - webnet
+
+  db:
+    image: postgres:15
+    volumes:
+      -../datosdjtnt:/var/lib/postgresql/data/
+    environment:
+      - postgresql=db_dj_tenant
+      - postgres_user=postgres
+      - postgres_password=123456
+    ports:
+      -"5432:5432"
+    healthcheck:
+      test: ["CDM-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - webnet
+    
+networks:
+  webnet:
+      
