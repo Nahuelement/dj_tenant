@@ -264,6 +264,8 @@ poetry.toml
 pyrightconfig.json
 
 ### VisualStudioCode ###
+.datosdjtnt
+.env_dev
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
